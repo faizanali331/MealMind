@@ -28,7 +28,7 @@ import com.example.mealmind.ui.theme.MealMindTheme
 //import java.lang.reflect.Modifier
 
 @Composable
-fun Chicken(imageChicken: Int, imageArrow: Int, dishName: String, rating: Int, pic: Int, follow: Int, modifier: Modifier){
+fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: Int, pic: Int, follow: Int, modifier: Modifier){
     val image = painterResource(imageChicken)
     val imageArrow = painterResource(imageArrow)
     val rate = painterResource(rating)
@@ -143,7 +143,7 @@ fun ChickenPreview(){
         Scaffold(
             modifier = Modifier.statusBarsPadding().navigationBarsPadding()
         ) { padding ->
-            Chicken(
+            MealDetails(
                 R.drawable.chiecken,
                 R.drawable.arrow,
                 dishName = "Grilled Chicken",
