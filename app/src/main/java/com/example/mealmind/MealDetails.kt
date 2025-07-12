@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,9 +17,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.PlayArrow
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
@@ -62,14 +67,17 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
             Image(
                 painter = image,
                 contentDescription = null,
-                modifier = Modifier.size(400.dp).padding(5.dp)
+                modifier = Modifier.size(400.dp).padding(5.dp).align(Alignment.TopStart)
             )
             val context = LocalContext.current
 
             IconButton(
                 onClick = {
                     Toast.makeText(context, "Backed", Toast.LENGTH_SHORT).show()
-                }
+                }, modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(Color.LightGray)
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
@@ -87,7 +95,7 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
             IconButton(
                 onClick = {
                     isAdded = !isAdded
-                    val message = if (isAdded) "Added" else "Unadded"
+                    val message = if (isAdded) "Added" else "Removed"
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.align(Alignment.TopEnd)
@@ -190,18 +198,35 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
             modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
         )
         Text(
-            text = " 6 boiled eggs with pepper 50 grams of garlic paste and blend it with tomato until it became red",
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400),
-            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-        )
-        Text(
-            text = " with pepper 50 grams of garlic paste and blend it with tomato until it became red",
+            text = " Green flacks with garlic&ginger curd roast it with chili powder and use some lemon and butter",
             fontSize = 20.sp,
             fontWeight = FontWeight(400),
             modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
         )
 
+
+        IconButton(
+            onClick = {
+
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = "Play Video",     // For accessibility
+                    tint = Color.Black                     // Icon color (you can change it)
+                )
+                Spacer(modifier = Modifier.width(8.dp))    // Like space between icon and text
+                Text(
+                    text = "Play Video",                   // The text next to icon
+                    color = Color.Black,                   // Text color
+                    fontSize = 16.sp                       // Font size
+                )
+            }
+        }
 
     }
 }
