@@ -20,9 +20,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             MealMindTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    MealDetails(
+                        R.drawable.chiecken,
+                        R.drawable.arrow,
+                        dishName = "Grilled Chicken",
+                        R.drawable.ratings,
+                        R.drawable.profile,
+                        R.drawable.flw,
                         modifier = Modifier.padding(innerPadding)
+
                     )
                 }
             }
