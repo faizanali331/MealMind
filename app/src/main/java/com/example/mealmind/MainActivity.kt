@@ -20,15 +20,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             MealMindTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MealDetails(
-                        R.drawable.chiecken,
-                        R.drawable.arrow,
-                        dishName = "Grilled Chicken",
-                        R.drawable.ratings,
-                        R.drawable.profile,
-                        R.drawable.flw,
+//                    MealDetails(
+//                        R.drawable.chiecken,
+//                        R.drawable.arrow,
+//                        dishName = "Grilled Chicken",
+//                        R.drawable.ratings,
+//                        R.drawable.profile,
+//                        R.drawable.flw,
+//                        modifier = Modifier.padding(innerPadding)
+//
+//                    )
+                    SignInScreen(
                         modifier = Modifier.padding(innerPadding)
-
                     )
                 }
             }
