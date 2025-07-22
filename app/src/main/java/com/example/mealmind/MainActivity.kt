@@ -30,7 +30,10 @@ class MainActivity : ComponentActivity() {
 //                        modifier = Modifier.padding(innerPadding)
 //
 //                    )
-                    SignInScreen(
+//                    SignInScreen(
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+                    HomeScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
