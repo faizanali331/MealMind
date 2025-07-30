@@ -3,32 +3,38 @@ package com.example.mealmind.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmailTextField(
+fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
-    title: String = "Email",
+    title: String = "Search",
     onChange: (String) -> Unit,
-    emailText: String
+    searchText: String
 ) {
     Column(
-        modifier = modifier.fillMaxWidth().padding(16.dp)
+        modifier = modifier.fillMaxWidth(),
     ) {
         Text(
             text = title,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = emailText,
+            value = searchText,
             onValueChange = {
                 onChange(it)
             },
@@ -38,19 +44,18 @@ fun EmailTextField(
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Text
             ),
-            singleLine = true
+            singleLine = true,
+
+            shape = RoundedCornerShape(8.dp), // Rounded corners for the field itself
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search icon"
+                )
+            },
+            //colors = TextFieldDefaults.textFieldColors()
         )
     }
-
-}
-@Preview(showSystemUi = true)
-@Composable
-fun EmailTextFieldPreview(){
-
-    EmailTextField(
-        onChange = {},
-        emailText = "fyta"
-    )
 }
