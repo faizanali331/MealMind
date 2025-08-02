@@ -46,17 +46,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import com.example.mealmind.model.foodItemList
 //import com.example.happybirthday.ui.theme.HappyBirthdayTheme
 import com.example.mealmind.ui.theme.MealMindTheme
 //import java.lang.reflect.Modifier
 
 @Composable
-fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: Int, pic: Int, follow: Int, modifier: Modifier){
-    val image = painterResource(imageChicken)
-    val imageArrow = painterResource(imageArrow)
-    val rate = painterResource(rating)
-    val pic = painterResource(pic)
-    val follow = painterResource(follow)
+fun MealDetails(
+    modifier: Modifier= Modifier,
+    mealId: Int
+){
+    val foodItem = foodItemList.firstOrNull { it.id == mealId }
+//    val image = painterResource(imageChicken)
+//    val imageArrow = painterResource(imageArrow)
+//    val rate = painterResource(rating)
+//    val pic = painterResource(pic)
+//    val follow = painterResource(follow)
 
     val context = LocalContext.current
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -65,10 +71,9 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
         Box(modifier = Modifier
             .fillMaxWidth().height(screenHeight * 0.4f)
             ) {
-            Image(
-                painter = image,
+            AsyncImage(
+                model = foodItem?.image,
                 contentDescription = null,
-                modifier = Modifier.size(400.dp).padding(5.dp).align(Alignment.TopStart)
             )
             val context = LocalContext.current
 
@@ -111,61 +116,61 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
 
         Row() {
             Text(
-                text = dishName,
+                text = foodItem?.foodName ?: "",
                 fontSize = 30.sp,
                 fontWeight = FontWeight(800),
                 modifier = Modifier.padding(10.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = rate,
-                contentDescription = null,
-                modifier = Modifier.size(60.dp).padding(5.dp)
-            )
-        }
-        Row(){
-            Image(
-                painter = pic,
-                contentDescription = null,
-                modifier = Modifier.size(60.dp).padding(5.dp)
-            )
-            Column(){
-                Text(
-                    text = "Virat Kohli",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight(500),
-                    modifier = Modifier.padding(10.dp)
-                )
-                Text(
-                    text = "@ViratKohli183",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight(300),
-                    modifier = Modifier.padding(0.dp)
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-
-            var isFollowed by remember { mutableStateOf(false) }
-            Button(
-                onClick = {
-                    isFollowed = !isFollowed
-                    val message = if (isFollowed) "Unfollowed" else "Followed"
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isFollowed) Color.Red else Color.LightGray
-                )
-            ) {
-                Text(
-                    if(isFollowed) "Followed" else "Following"
-                )
-            }
 //            Image(
-//                painter = follow,
+//                painter = rate,
 //                contentDescription = null,
-//                modifier = Modifier.size(80.dp).padding(5.dp)
+//                modifier = Modifier.size(60.dp).padding(5.dp)
 //            )
         }
+//        Row(){
+//            Image(
+//                painter = pic,
+//                contentDescription = null,
+//                modifier = Modifier.size(60.dp).padding(5.dp)
+//            )
+//            Column(){
+//                Text(
+//                    text = "Virat Kohli",
+//                    fontSize = 25.sp,
+//                    fontWeight = FontWeight(500),
+//                    modifier = Modifier.padding(10.dp)
+//                )
+//                Text(
+//                    text = "@ViratKohli183",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight(300),
+//                    modifier = Modifier.padding(0.dp)
+//                )
+//            }
+//            Spacer(modifier = Modifier.weight(1f))
+//
+//            var isFollowed by remember { mutableStateOf(false) }
+//            Button(
+//                onClick = {
+//                    isFollowed = !isFollowed
+//                    val message = if (isFollowed) "Unfollowed" else "Followed"
+//                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+//                },
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = if (isFollowed) Color.Red else Color.LightGray
+//                )
+//            ) {
+//                Text(
+//                    if(isFollowed) "Followed" else "Following"
+//                )
+//            }
+////            Image(
+////                painter = follow,
+////                contentDescription = null,
+////                modifier = Modifier.size(80.dp).padding(5.dp)
+////            )
+//        }
         Text(
             text = "Description",
             fontSize = 25.sp,
@@ -232,23 +237,16 @@ fun MealDetails(imageChicken: Int, imageArrow: Int, dishName: String, rating: In
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ChickenPreview(){
-    MealMindTheme {
-        Scaffold(
-            modifier = Modifier.statusBarsPadding().navigationBarsPadding()
-        ) { padding ->
-            MealDetails(
-                R.drawable.chiecken,
-                R.drawable.arrow,
-                dishName = "Grilled Chicken",
-                R.drawable.ratings,
-                R.drawable.profile,
-                R.drawable.flw,
-                modifier = Modifier.padding(padding)
-
-            )
-        }
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun ChickenPreview(){
+//    MealMindTheme {
+//        Scaffold(
+//            modifier = Modifier.statusBarsPadding().navigationBarsPadding()
+//        ) { padding ->
+//            MealDetails(
+//
+//            )
+//        }
+//    }
+//}

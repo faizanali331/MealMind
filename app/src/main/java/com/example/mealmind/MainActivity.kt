@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.mealmind.navigation.AppNavigation
 import com.example.mealmind.ui.theme.MealMindTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,9 +34,10 @@ class MainActivity : ComponentActivity() {
 //                    SignInScreen(
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                    HomeScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+//                    HomeScreen(
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+                    AppNavigation(Modifier.padding(innerPadding))
                 }
             }
         }

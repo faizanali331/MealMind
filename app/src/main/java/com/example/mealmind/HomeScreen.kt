@@ -46,7 +46,10 @@ import com.example.mealmind.components.SearchBar
 import com.example.mealmind.model.foodItemList
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit
+) {
     val context = LocalContext.current
     var searchText by remember { mutableStateOf("") }
     Column(
@@ -100,8 +103,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         ) {
             items(items = foodItemList) { foodItem ->
                 FoodItemRowUI(foodItem = foodItem, onClick = { id ->
-                    val item = foodItemList.first { it.id == id }
-                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
+                    onClick(id)
+//                    val item = foodItemList.first { it.id == id }
+//                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
                 })
                 Spacer(
                     modifier = Modifier.width(15.dp)
@@ -125,8 +129,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         ) {
             items(items = foodItemList) { foodItem ->
                 FoodItemUI(foodItem = foodItem, onClick = { id ->
-                    val item = foodItemList.first { it.id == id }
-                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
+                      onClick(id)
+//                    val item = foodItemList.first { it.id == id }
+//                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
                 })
                 Spacer(
                     modifier = Modifier.height(5.dp)
