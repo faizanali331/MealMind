@@ -8,8 +8,6 @@ sealed class HomeDestination (val route: String){
     object HomeScreen: HomeDestination("home_screen")
     @Serializable
     object FoodDetails: HomeDestination("details/{id}"){
-        fun createRoute(id: Int)="details/$id"
+        fun createRoute(id: String?)="details/$id"
     }
-
-
 }

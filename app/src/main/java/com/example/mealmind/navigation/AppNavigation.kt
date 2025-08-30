@@ -12,7 +12,7 @@ import com.example.mealmind.MealDetails
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
-    val navController= rememberNavController()
+    val navController = rememberNavController()
     NavHost(navController = navController, startDestination = HomeDestination.HomeScreen.route){
         composable(
             HomeDestination.HomeScreen.route
@@ -24,11 +24,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         composable(
             route = HomeDestination.FoodDetails.route,
             arguments = listOf(navArgument("id"){
-                type = NavType.IntType
+                type = NavType.StringType
             })
-        ){ backstackentry ->
-            val id = backstackentry.arguments?.getInt("id")?:0
-            MealDetails(mealId = id)
+        ){ backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?:""
+            //MealDetails(mealId = id)
         }
     }
 }

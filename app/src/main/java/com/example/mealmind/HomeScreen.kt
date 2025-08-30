@@ -25,6 +25,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,10 +50,16 @@ import com.example.mealmind.model.foodItemList
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onClick: (Int) -> Unit
+    onClick: (String?) -> Unit,
+    foodViewModel: FoodViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val context = LocalContext.current
+    val foodItems = foodViewModel.foodItems.collectAsState()
     var searchText by remember { mutableStateOf("") }
+    LaunchedEffect(null) {
+        foodViewModel.getFoodItems("a")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +69,7 @@ fun HomeScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top=32.dp),
+                .padding(top=24.dp, bottom = 0.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
@@ -98,22 +106,8 @@ fun HomeScreen(
                 )
             }
         }
-        LazyRow(
-            modifier = Modifier.padding(top=0.dp)
-        ) {
-            items(items = foodItemList) { foodItem ->
-                FoodItemRowUI(foodItem = foodItem, onClick = { id ->
-                    onClick(id)
-//                    val item = foodItemList.first { it.id == id }
-//                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
-                })
-                Spacer(
-                    modifier = Modifier.width(15.dp)
-                )
-            }
-        }
         SearchBar(
-            modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
             hint = "type ingredients...",
             title = "",
             onChange = {
@@ -121,23 +115,36 @@ fun HomeScreen(
             },
             searchText=searchText
         )
-        LazyColumn(
-//            modifier = modifier,
-//            contentPadding = PaddingValues(16.dp)
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(0.dp)
+        LazyRow(
+            modifier = Modifier.padding(top=0.dp)
         ) {
-            items(items = foodItemList) { foodItem ->
-                FoodItemUI(foodItem = foodItem, onClick = { id ->
-                      onClick(id)
-//                    val item = foodItemList.first { it.id == id }
-//                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
+            items(items = foodItems.value?:emptyList()) { foodItem ->
+                FoodItemRowUI(foodItem = foodItem, onClick = { id ->
+                    onClick(id)
                 })
                 Spacer(
-                    modifier = Modifier.height(5.dp)
+                    modifier = Modifier.width(15.dp)
                 )
             }
         }
+
+//        LazyColumn(
+////            modifier = modifier,
+////            contentPadding = PaddingValues(16.dp)
+//            modifier = Modifier.fillMaxSize(),
+//            contentPadding = PaddingValues(0.dp)
+//        ) {
+//            items(items = foodItemList) { foodItem ->
+//                FoodItemUI(foodItem = foodItem, onClick = { id ->
+//                      onClick(id)
+////                    val item = foodItemList.first { it.id == id }
+////                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
+//                })
+//                Spacer(
+//                    modifier = Modifier.height(5.dp)
+//                )
+//            }
+//        }
     }
 }
 

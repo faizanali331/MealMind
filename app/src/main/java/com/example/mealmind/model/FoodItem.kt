@@ -1,5 +1,6 @@
 package com.example.mealmind.model
 
+import androidx.lifecycle.ViewModel
 import com.example.mealmind.R
 
 data class FoodItem(
@@ -8,8 +9,6 @@ data class FoodItem(
     val foodName: String? = null,
     val uploadedDate: String? = null
 )
-
-
 
 val foodItemList = listOf<FoodItem>(
     FoodItem(

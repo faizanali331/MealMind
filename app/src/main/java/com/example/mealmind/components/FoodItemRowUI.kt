@@ -20,20 +20,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.mealmind.model.FoodItem
+import com.example.mealmind.model.Meal
 
 @Composable
 fun FoodItemRowUI(modifier: Modifier = Modifier,
-                  foodItem: FoodItem,
-                  onClick: (Int)->Unit
+                  foodItem: Meal?,
+                  onClick: (String?)->Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth().clickable{
-            onClick(foodItem.id)
+            onClick(foodItem?.idMeal)
         }
     ){
-        if (foodItem.image != null)
+        if (foodItem?.strMealThumb != null)
             AsyncImage(
-                model = foodItem.image,
+                model = foodItem.strMealThumb,
                 contentDescription = "",
                 modifier = Modifier.height(150.dp).width(250.dp).clip(shape = RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
@@ -41,7 +42,7 @@ fun FoodItemRowUI(modifier: Modifier = Modifier,
             )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = foodItem.foodName ?: "",
+            text = foodItem?.strMeal ?: "",
             fontSize = 32.sp
         )
 
