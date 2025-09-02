@@ -21,12 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.mealmind.model.FoodItem
+import com.example.mealmind.model.Meal
 
 @Composable
 fun FoodItemUI(
     modifier: Modifier = Modifier,
-               foodItem: FoodItem,
-               onClick: (Int)->Unit
+               foodItem: Meal?,
+               onClick: (String?)->Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
@@ -37,18 +38,18 @@ fun FoodItemUI(
                 .background(color = Color.Blue.copy(0.2f))
                 .padding(top = 4.dp)
                 .clickable {
-                onClick(foodItem.id)
+                onClick(foodItem?.idMeal)
             }
         ) {
-            if (foodItem.image != null)
+            if (foodItem?.strMealThumb != null)
                 AsyncImage(
-                    model = foodItem.image,
+                    model = foodItem.strMealThumb,
                     contentDescription = "",
                     modifier = Modifier.size(60.dp)
                 )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
-                text = foodItem.foodName ?: "",
+                text = foodItem?.strMeal ?: "",
                 fontSize = 16.sp
             )
 

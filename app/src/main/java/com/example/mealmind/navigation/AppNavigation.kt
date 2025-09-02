@@ -28,7 +28,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             })
         ){ backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?:""
-            //MealDetails(mealId = id)
+            MealDetails(mealId = id)
         }
     }
 }

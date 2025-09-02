@@ -12,4 +12,8 @@ class FoodRepository {
         val response = retrofitClient.getMeals(query)
         return response.body()?.meals
     }
+    suspend fun getGFoodDetail(query: String): List<Meal?>?{
+        val response = retrofitClient.getMealDetails(query)
+        return response.body()?.meals
+    }
 }

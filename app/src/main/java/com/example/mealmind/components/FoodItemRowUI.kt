@@ -38,7 +38,6 @@ fun FoodItemRowUI(modifier: Modifier = Modifier,
                 contentDescription = "",
                 modifier = Modifier.height(150.dp).width(250.dp).clip(shape = RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
-
             )
         Spacer(modifier = Modifier.height(5.dp))
         Text(

@@ -32,6 +32,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,15 +57,18 @@ import com.example.mealmind.ui.theme.MealMindTheme
 @Composable
 fun MealDetails(
     modifier: Modifier= Modifier,
-    mealId: Int
+    mealId: String,
+    foodViewModel: FoodViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ){
-    val foodItem = foodItemList.firstOrNull { it.id == mealId }
+    val foodDetail = foodViewModel.foodDetail.collectAsState()
 //    val image = painterResource(imageChicken)
 //    val imageArrow = painterResource(imageArrow)
 //    val rate = painterResource(rating)
 //    val pic = painterResource(pic)
 //    val follow = painterResource(follow)
-
+    LaunchedEffect(null) {
+        foodViewModel.getFoodDetail(mealId)
+    }
     val context = LocalContext.current
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     Column(modifier = modifier.fillMaxSize()) {
@@ -72,7 +77,7 @@ fun MealDetails(
             .fillMaxWidth().height(screenHeight * 0.4f)
             ) {
             AsyncImage(
-                model = foodItem?.image,
+                model = foodDetail.value?.strMealThumb,
                 contentDescription = null,
             )
             val context = LocalContext.current
@@ -116,7 +121,7 @@ fun MealDetails(
 
         Row() {
             Text(
-                text = foodItem?.foodName ?: "",
+                text = foodDetail.value?.strMeal ?: "",
                 fontSize = 30.sp,
                 fontWeight = FontWeight(800),
                 modifier = Modifier.padding(10.dp)

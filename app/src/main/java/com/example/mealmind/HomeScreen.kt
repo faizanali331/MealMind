@@ -128,28 +128,26 @@ fun HomeScreen(
             }
         }
 
-//        LazyColumn(
-////            modifier = modifier,
-////            contentPadding = PaddingValues(16.dp)
-//            modifier = Modifier.fillMaxSize(),
-//            contentPadding = PaddingValues(0.dp)
-//        ) {
-//            items(items = foodItemList) { foodItem ->
-//                FoodItemUI(foodItem = foodItem, onClick = { id ->
-//                      onClick(id)
-////                    val item = foodItemList.first { it.id == id }
-////                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
-//                })
-//                Spacer(
-//                    modifier = Modifier.height(5.dp)
-//                )
-//            }
-//        }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+            items(items = foodItems.value?:emptyList()) { foodItem ->
+                FoodItemUI(foodItem = foodItem, onClick = { id ->
+                      onClick(id)
+//                    val item = foodItemList.first { it.id == id }
+//                    Toast.makeText(context, item.foodName, Toast.LENGTH_SHORT).show()
+                })
+                Spacer(
+                    modifier = Modifier.height(5.dp)
+                )
+            }
+        }
     }
 }
 
 @Composable
-fun Imgage() {
+fun Image() {
     TODO("Not yet implemented")
 }
 @Preview(showBackground = true, showSystemUi = true)

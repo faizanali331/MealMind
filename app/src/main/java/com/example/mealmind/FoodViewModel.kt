@@ -21,6 +21,14 @@ class FoodViewModel: ViewModel() {
             _foodItems.value = foodRepository.getFoodItems(query)
         }
     }
+    private val _foodDetail = MutableStateFlow<Meal?>(null)
+    val foodDetail = _foodDetail
+    fun getFoodDetail(id: String){
+        viewModelScope.launch {
+            _foodDetail.value = foodRepository.getGFoodDetail(id)?.first()
+        }
+
+    }
 
 
 //    var counter = MutableStateFlow<Int>(0)
