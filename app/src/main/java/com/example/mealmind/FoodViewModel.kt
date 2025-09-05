@@ -21,6 +21,15 @@ class FoodViewModel: ViewModel() {
             _foodItems.value = foodRepository.getFoodItems(query)
         }
     }
+    private  val _foodItemsRow = MutableStateFlow<List<Meal?>?>(emptyList())
+    val foodItemsRow: StateFlow<List<Meal?>?> = _foodItemsRow
+    fun getFoodItemsRow(query: String){
+        viewModelScope.launch {
+            _foodItemsRow.value = foodRepository.getFoodItems(query)
+        }
+    }
+
+
     private val _foodDetail = MutableStateFlow<Meal?>(null)
     val foodDetail = _foodDetail
     fun getFoodDetail(id: String){

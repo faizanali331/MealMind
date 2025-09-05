@@ -55,11 +55,15 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val foodItems = foodViewModel.foodItems.collectAsState()
+    val foodItemsRow = foodViewModel.foodItemsRow.collectAsState()
     var searchText by remember { mutableStateOf("") }
-    LaunchedEffect(null) {
-        foodViewModel.getFoodItems("a")
-    }
 
+    LaunchedEffect(searchText) {
+        foodViewModel.getFoodItems(searchText)
+    }
+    LaunchedEffect(null) {
+        foodViewModel.getFoodItemsRow("m")
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,7 +112,7 @@ fun HomeScreen(
         }
         SearchBar(
             modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
-            hint = "type ingredients...",
+            hint = "Type your desired food...",
             title = "",
             onChange = {
                 searchText = it
@@ -132,7 +136,7 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(0.dp)
         ) {
-            items(items = foodItems.value?:emptyList()) { foodItem ->
+            items(items = foodItemsRow.value?:emptyList()) { foodItem ->
                 FoodItemUI(foodItem = foodItem, onClick = { id ->
                       onClick(id)
 //                    val item = foodItemList.first { it.id == id }

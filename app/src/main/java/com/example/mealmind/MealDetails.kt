@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -41,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -67,7 +70,7 @@ fun MealDetails(
 //    val pic = painterResource(pic)
 //    val follow = painterResource(follow)
     LaunchedEffect(null) {
-        foodViewModel.getFoodDetail(mealId)
+         foodViewModel.getFoodDetail(mealId)
     }
     val context = LocalContext.current
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -79,6 +82,8 @@ fun MealDetails(
             AsyncImage(
                 model = foodDetail.value?.strMealThumb,
                 contentDescription = null,
+                modifier = Modifier.fillMaxSize().padding(12.dp),  // Fills the entire available space
+                contentScale = ContentScale.Crop
             )
             val context = LocalContext.current
 
@@ -95,13 +100,7 @@ fun MealDetails(
                     contentDescription = "Back"
                 )
             }
-//            Image(
-//                painter = imageArrow,
-//                contentDescription = null,
-//                modifier = Modifier.size(40.dp).padding(5.dp)
-//                    .align(Alignment.TopStart)
-//
-//            )
+
             var isAdded by remember { mutableStateOf(false) }
             IconButton(
                 onClick = {
@@ -119,18 +118,38 @@ fun MealDetails(
                 }
             }
 
-        Row() {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = foodDetail.value?.strMeal ?: "",
-                fontSize = 30.sp,
-                fontWeight = FontWeight(800),
-                modifier = Modifier.padding(10.dp)
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(end = 8.dp)
             )
-            Spacer(modifier = Modifier.weight(1f))
-//            Image(
-//                painter = rate,
-//                contentDescription = null,
-//                modifier = Modifier.size(60.dp).padding(5.dp)
+            Text(
+                text = foodDetail.value?.strArea?:"",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(horizontal = 8.dp)
+
+            )
+            //Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = foodDetail.value?.strCategory ?: "",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(start = 8.dp)
+            )
+//            Text(
+//                text = foodDetail.value?.strTags ?: "",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight(300),
+//                modifier = Modifier.padding(10.dp)
 //            )
         }
 //        Row(){
@@ -176,68 +195,228 @@ fun MealDetails(
 ////                modifier = Modifier.size(80.dp).padding(5.dp)
 ////            )
 //        }
-        Text(
-            text = "Description",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 20.dp, bottom = 5.dp)
 
-        )
-        Text(
-            text = "This amazing grilled Chicken very tasty also very healthy." +
-                    " It contains 50 grams of protein",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = 10.dp)
-        )
-        Text(
-            text = " Ingredients",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 20.dp, bottom = 5.dp)
-        )
-        Text(
-            text = " Chicken Breast",
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400),
-            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-        )
-        Text(
-            text = " Green flacks with garlic&ginger curd roast it with chili powder and use some lemon and butter",
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400),
-            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-        )
-        Text(
-            text = " Green flacks with garlic&ginger curd roast it with chili powder and use some lemon and butter",
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400),
-            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-        )
-
-
-        IconButton(
-            onClick = {
-
-            },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play Video",     // For accessibility
-                    tint = Color.Black                     // Icon color (you can change it)
-                )
-                Spacer(modifier = Modifier.width(8.dp))    // Like space between icon and text
+        LazyColumn {
+            item {
                 Text(
-                    text = "Play Video",                   // The text next to icon
-                    color = Color.Black,                   // Text color
-                    fontSize = 16.sp                       // Font size
+                    text = "Instructions",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+                )
+
+                Text(
+                    text = foodDetail.value?.strInstructions?:"",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure1
+                        ?: "") + " " + (foodDetail.value?.strIngredient1 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure2
+                        ?: "") + " " + (foodDetail.value?.strIngredient2 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure3
+                        ?: "") + " " + (foodDetail.value?.strIngredient3 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure4
+                        ?: "") + " " + (foodDetail.value?.strIngredient4 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure5
+                        ?: "") + " " + (foodDetail.value?.strIngredient5 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure6
+                        ?: "") + " " + (foodDetail.value?.strIngredient6 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure7
+                        ?: "") + " " + (foodDetail.value?.strIngredient7 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure8
+                        ?: "") + " " + (foodDetail.value?.strIngredient8 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure9
+                        ?: "") + " " + (foodDetail.value?.strIngredient9 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure10
+                        ?: "") + " " + (foodDetail.value?.strIngredient10 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure11
+                        ?: "") + " " + (foodDetail.value?.strIngredient11 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure12
+                        ?: "") + " " + (foodDetail.value?.strIngredient12 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure13
+                        ?: "") + " " + (foodDetail.value?.strIngredient13 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure14
+                        ?: "") + " " + (foodDetail.value?.strIngredient14 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure15
+                        ?: "") + " " + (foodDetail.value?.strIngredient15 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure16
+                        ?: "") + " " + (foodDetail.value?.strIngredient16 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure17
+                        ?: "") + " " + (foodDetail.value?.strIngredient17 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure18
+                        ?: "") + " " + (foodDetail.value?.strIngredient18 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure19
+                        ?: "") + " " + (foodDetail.value?.strIngredient19 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            item {
+                Text(
+                    text = (foodDetail.value?.strMeasure20
+                        ?: "") + " " + (foodDetail.value?.strIngredient20 ?: ""),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp)
                 )
             }
         }
+
+
+//        IconButton(
+//            onClick = {
+//
+//            },
+//            modifier = Modifier.align(Alignment.CenterHorizontally)
+//        ) {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.PlayArrow,
+//                    contentDescription = "Play Video",     // For accessibility
+//                    tint = Color.Black                     // Icon color (you can change it)
+//                )
+//                Spacer(modifier = Modifier.width(8.dp))    // Like space between icon and text
+//                Text(
+//                    text = "Play Video",                   // The text next to icon
+//                    color = Color.Black,                   // Text color
+//                    fontSize = 16.sp                       // Font size
+//                )
+//            }
+//        }
 
     }
 }
