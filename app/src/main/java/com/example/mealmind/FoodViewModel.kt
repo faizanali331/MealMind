@@ -1,0 +1,55 @@
+package com.example.mealmind
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mealmind.model.FoodItem
+import com.example.mealmind.model.Meal
+import com.example.mealmind.model.foodItemList
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+class FoodViewModel: ViewModel() {
+    val foodRepository = FoodRepository()
+    private val _foodItems = MutableStateFlow<List<Meal?>?>(emptyList())
+    val foodItems: StateFlow<List<Meal?>?> = _foodItems
+    fun getFoodItems(query: String) {
+        viewModelScope.launch {
+            Log.d("FoodViewModel", "getFoodItems is called")
+            _foodItems.value = foodRepository.getFoodItems(query)
+        }
+    }
+    private  val _foodItemsRow = MutableStateFlow<List<Meal?>?>(emptyList())
+    val foodItemsRow: StateFlow<List<Meal?>?> = _foodItemsRow
+    fun getFoodItemsRow(query: String){
+        viewModelScope.launch {
+            _foodItemsRow.value = foodRepository.getFoodItems(query)
+        }
+    }
+
+
+    private val _foodDetail = MutableStateFlow<Meal?>(null)
+    val foodDetail = _foodDetail
+    fun getFoodDetail(id: String){
+        viewModelScope.launch {
+            _foodDetail.value = foodRepository.getGFoodDetail(id)?.first()
+        }
+
+    }
+
+
+//    var counter = MutableStateFlow<Int>(0)
+//    fun  startCounter(){
+//        viewModelScope.launch {
+//            Log.d("FoodViewModel", "startCounter is called")
+//           // Log.d("MealViewModel", "insideStartCounter")
+//            while(true){
+//                delay(500)
+//                counter.value=counter.value+1
+//               // Log.d("MealViewModel", "${counter.value}")
+//            }
+//        }
+//    }
+}
